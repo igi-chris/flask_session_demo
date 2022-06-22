@@ -1,9 +1,16 @@
 from flask import Flask, render_template, session, request, jsonify
 from flask_session import Session
+import os
+import redis
 
 app = Flask(__name__)
 # Check Configuration section for more details
-SESSION_TYPE = 'filesystem'
+#igiml.redis.cache.windows.net:6380,password=7pfsx6oSloLNoWnVhjZIl8MSgMIhjYV45AzCaLPA0dw=,ssl=True,abortConnect=False
+redis_pwd = os.getenv('IGI_ML_REDIS_PWD')
+SESSION_TYPE = 'redis'
+r = redis.Redis(host="igiml.redis.cache.windows.net", port=6380, 
+                password=redis_pwd, ssl=True)
+SESSION_REDIS = r
 app.config.from_object(__name__)
 Session(app)
 
