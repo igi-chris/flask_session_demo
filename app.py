@@ -16,25 +16,27 @@ Session(app)
 
 @app.route("/", methods=['GET'])
 def index() -> str:
-    raw_data = get().data.decode('utf-8')
-    session_state = json.loads(raw_data)
-    return render_template('index.html', data=session_state)
-
-@app.route('/get/', methods=['GET'])
-def get():
-    return jsonify(
-        key1=session.get("key1", []),
-        key2=session.get("key2", []),
-        key3=session.get("key3", []))
+    return render_template('index.html', data=session)
         
-@app.route('/set/')
-def set():
+@app.route('/append/')
+def append_session_data():
     for param_name, val in request.args.items():
         if param_name not in session:
             session[param_name] = []
         if val:
             session[param_name].append(val)
     return index()
+        
+@app.route('/overwrite/')
+def overwrite_session_data():
+    for param_name, val in request.args.items():
+        if val:
+            session[param_name] = val
+    return index()
+
+@app.route('/get/', methods=['GET'])
+def get():
+    return jsonify(session)
 
 # @app.route('/reset/')
 # def reset():

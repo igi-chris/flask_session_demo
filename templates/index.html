@@ -13,14 +13,29 @@
 
 <body>
     <div class="container" style="max-width:850px">
-        <form action="/set" method="GET" id="args-form" name="args_form">
-            <input class="form-control" name="key1" type="text" placeholder="key1">
-            <input class="form-control" name="key2" type="text" placeholder="key2">
-            <input class="form-control" name="key3" type="text" placeholder="key3">
-            <button type="submit" class="btn btn-primary">Submit</button>
+        <form action="/append" method="GET">
+            <h6>Set basic key values (append)</h6>
+            <input class="form-control" name="AppendKey1" type="text" placeholder="Append text key">
+            <input class="form-control" name="Appendkey2" type="number" placeholder="Append number key">
+            <button type="submit" class="btn btn-primary">Submit Keys</button>
         </form>
-
         <hr/>
+
+        <form action="/overwrite" method="GET">
+            <h6>Set basic key values (overwrite)</h6>
+            <input class="form-control" name="OverwriteKey1" type="text" placeholder="Overwrite text key">
+            <input class="form-control" name="Overwritekey2" type="number" placeholder="Overwrite number key">
+            <button type="submit" class="btn btn-primary">Submit Keys</button>
+        </form>
+        <hr/>
+
+        <!-- <form action="/df" method="GET">
+            <p>Set dataframe obj</p>
+            <input class="form-control" name="df_n_cols" type="range" min=1 max=100000 placeholder="n_cols">
+            <input class="form-control" name="df_n_rows" type="range" min=1 max=100000 placeholder="n_rows">
+            <button type="submit" class="btn btn-primary">Submit Keys</button>
+        </form>
+        <hr/> -->
 
         {% for k,v in data.items() %}
             <p>{{ k }}: {{ v }}</p>
