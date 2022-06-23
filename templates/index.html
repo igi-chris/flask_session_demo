@@ -15,7 +15,7 @@
     <div class="container" style="max-width:800px">
         <br/>
         <div class="row">
-            <div class="col">
+            <div class="col-3">
                 <h5>Append Values</h5>
                 <form action="/append" method="GET">
                     <input class="form-control" name="AppendKey1" type="text" placeholder="Append text key">
@@ -32,21 +32,21 @@
                 </form>
         
                 <br/>
-                <p>Create new dataframe</p>
-                <form action="/create_df" method="GET">
+                <p>Create new dataframe & model</p>
+                <form action="/create_df_and_model" method="GET">
                     <input class="form-control" name="df_n_cols" type="number" min=1 max=100000 placeholder="n_cols">
                     <input class="form-control" name="df_n_rows" type="number" min=1 max=100000 placeholder="n_rows">
                     <button type="submit" class="btn btn-primary">Submit Keys</button>
                 </form>
             </div>
     
-            <div class="col">
+            <div class="col-9">
                 {% for k,v in data.items() %}
                     <p>{{ k }}: {{ v }}</p>
                 {% endfor %}
         
                 <form action="/reset" method="GET">
-                    <button type="submit" class="btn btn-danger">Clear Session</button>
+                    <button type="submit" class="btn btn-danger float-right">Clear Session</button>
                 </form>
             </div>
 
