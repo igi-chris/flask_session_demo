@@ -2,7 +2,6 @@ from flask import Flask, render_template, session, request, jsonify
 from flask_session import Session
 import os
 import redis
-import json
 
 app = Flask(__name__)
 # Check Configuration section for more details
@@ -38,8 +37,7 @@ def overwrite_session_data():
 def get():
     return jsonify(session)
 
-# @app.route('/reset/')
-# def reset():
-#     for param_name in request.args.keys():
-#         session[param_name] = []
-#     return get()
+@app.route('/reset/')
+def reset():
+    session.clear()
+    return index()
