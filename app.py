@@ -1,6 +1,10 @@
+import imp
+import os
 from flask import Flask, render_template, session, request, jsonify
 from flask_session import Session
-import os
+import numpy as np
+import pandas as pd
+from pyparsing import col
 import redis
 
 app = Flask(__name__)
@@ -13,7 +17,7 @@ SESSION_REDIS = r
 app.config.from_object(__name__)
 Session(app)
 
-@app.route("/", methods=['GET'])
+@app.route("/")
 def index() -> str:
     return render_template('index.html', data=session)
         
@@ -31,6 +35,17 @@ def overwrite_session_data():
     for param_name, val in request.args.items():
         if val:
             session[param_name] = val
+    return index()
+
+@app.route('/create_df/')
+def create_df():
+    ncols = request.args.get("df_n_cols", 5, type=int)
+    nrows = request.args.get("df_n_rows", 10, type=int)
+    cols = [chr(i+65) for i in range(ncols)]
+    
+    ndfs = sum(1 for val in session.values() if isinstance(val, pd.DataFrame))
+    df = pd.DataFrame(np.random.randint(0,100,size=(nrows, ncols)), columns=cols)
+    session[f'df_{ndfs}'] = df
     return index()
 
 @app.route('/get/', methods=['GET'])
