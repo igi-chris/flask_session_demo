@@ -20,7 +20,11 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
+        <hr/>
 
+        {% for k,v in data.items() %}
+            <p>{{ k }}: {{ v }}</p>
+        {% endfor %}
         
     </div>
 </body>
