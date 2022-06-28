@@ -1,5 +1,4 @@
 import os
-from random import randint
 from flask import Flask, render_template, session, request
 from flask_session import Session
 import numpy as np
@@ -10,10 +9,16 @@ from sklearn.linear_model import LinearRegression
 app = Flask(__name__)
 # Check Configuration section for more details
 redis_pwd = os.getenv('IGI_ML_REDIS_PWD')
-SESSION_TYPE = 'redis'
-r = redis.Redis(host="igiml.redis.cache.windows.net", port=6380, 
-                password=redis_pwd, ssl=True)
-SESSION_REDIS = r
+try:
+    r = redis.Redis(host="igiml.redis.cache.windows.net", port=6380, 
+                    password=redis_pwd, ssl=True)
+    SESSION_TYPE = 'redis'
+    SESSION_REDIS = r
+    r.ping()  # just something to trigger exeception if not connected
+except Exception as e:
+    print("** Using filesystem session cache as unable to connect to redis **")
+    SESSION_TYPE = 'filesystem'
+
 app.config.from_object(__name__)
 Session(app)
 
